@@ -1,0 +1,62 @@
+.LeftBlockCatalog{
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    overflow-x: auto;
+    &__text{
+        h4{
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+    &__price{
+        margin-top: 10px;
+        display: flex;
+        color: #3F4E65;
+        font-size: 14px;
+    }
+    &__counter{
+        margin-top: 16px;
+        display: flex;
+        margin-bottom: 34px;
+        gap: 10px;
+        input{
+            border: none;
+            outline: none;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, rgba(255, 198, 80, 0.3) 0%, rgba(254, 202, 110, 0.3) 97.25%);
+            border-radius: 1000px;
+            padding: 4px 14px;
+            font-size: 12px;
+            color: #3F4E65;
+            text-align: center;
+        }
+    }
+    &__input{
+        .more{
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        padding-bottom: 20px;
+        border-bottom: 1px dotted #3F4E65;
+        margin-bottom: 20px;
+        .InputButton{
+            display: flex;
+            margin-top: 25px;
+            gap: 10px;
+            button{
+                &:nth-child(2){
+                    min-width: 59px;
+                    max-width: 56px;
+                    min-height: 59px;
+                    max-height: 59px;
+                }
+            }
+        }
+    }
+    
+}

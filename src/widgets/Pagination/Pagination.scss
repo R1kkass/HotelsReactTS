@@ -1,0 +1,35 @@
+.Pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 35px;
+    align-items: center;
+    &__pages {
+        display: flex;
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+    &__active {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 198, 80, 0.3) 0%,
+            rgba(254, 202, 110, 0.3) 97.25%
+        );
+    }
+    button{
+        width: 9px;
+        height: 16px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: none;
+    }
+}
