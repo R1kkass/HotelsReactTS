@@ -3,11 +3,10 @@ import basket from "../SVG/Basket/BasketWhite.svg"
 import "./Card.scss"
 import bottle from "../SVG/Weight/Bottle.svg"
 import box from "../SVG/Weight/Box.svg"
-import { FC, useContext } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { ICardApi } from "../../api/CardApi"
-import { ContextPost } from "../../../app/Context/ContextPost"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
-import { addBasket } from "../../../entities/Redux/Store/basket"
+import { addBasket } from "../../../app/Redux/Store/basket"
 import { Link } from "react-router-dom"
 
 const Card: FC<ICardApi> = ({
@@ -20,6 +19,7 @@ const Card: FC<ICardApi> = ({
     brand,
     size,
 }) => {
+    const [type, setType] = useState<boolean>(true)
     const addBaskets = (post: any) => {
         let basket = JSON.parse(localStorage.getItem("basket") || "[]")
         let posts = post
@@ -27,12 +27,26 @@ const Card: FC<ICardApi> = ({
         basket.push(posts)
         localStorage.setItem("basket", JSON.stringify(basket))
         dispatch(addBasket(basket))
+        setType(false)
     }
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        let res = []
+        let basket = JSON.parse(localStorage.getItem("basket") || "[]")
+        for(let i=0; i<basket.length; i++){
+            res.push(basket[i].id)
+        }
+
+        if (res?.includes(id)) {
+            setType(false)
+            
+        }
+    }, [])
+
     return (
-        <Link to={`/product/${id}`}>
-            <div className="Card">
+        <div className="Card">
+            <Link to={`/product/${id}`}>
                 <div className="Card__img">
                     <img src={imgURL} />
                 </div>
@@ -54,11 +68,14 @@ const Card: FC<ICardApi> = ({
                         Бренд: <span>{brand} </span>
                     </p>
                 </div>
-                <div className="Card__price">
-                    <div className="Price">{price} T</div>
-                    <div className="Button">
+            </Link>
+            <div className="Card__price">
+                <div className="Price">{price} T</div>
+
+                <div className="Button">
+                    {type ? (
                         <MyButton
-                            onClick={() => {
+                            onClick={(e: React.MouseEvent) => {
                                 addBaskets({
                                     id,
                                     imgURL,
@@ -73,10 +90,16 @@ const Card: FC<ICardApi> = ({
                         >
                             В корзину <img src={basket} alt="" />
                         </MyButton>
-                    </div>
+                    ) : (
+                        <Link to="/basket">
+                            <MyButton>
+                                К корзине <img src={basket} alt="" />
+                            </MyButton>
+                        </Link>
+                    )}
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 

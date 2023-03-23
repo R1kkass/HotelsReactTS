@@ -1,23 +1,21 @@
 import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux/es/exports"
-import { ContextPost } from "../../app/Context/ContextPost"
-import { addBasket } from "../../entities/Redux/Store/basket"
+import { addBasket } from "../../app/Redux/Store/basket"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
-import { CardApi, ICardApi } from "../../shared/api/CardApi"
+import { ICardApi } from "../../shared/api/CardApi"
 import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
 import CardLine from "../../shared/UI/Card/CardLine"
 import "./Basket.scss"
 
 const Basket = () => {
 
-    const { count, basketSet, basket } = useContext(ContextPost)
     const dispatch = useDispatch()
     const bask:ICardApi[] = useSelector((state:any)=>state.basket.basket)
+    const count: number = useSelector((state:any)=>state.basket.count)
 
     useEffect(() => {
         dispatch(addBasket(JSON.parse(localStorage.getItem("basket") || "[]")))
-        basketSet(JSON.parse(localStorage.getItem("basket") || "[]"))
-    }, [count])
+     }, [count])
 
     return (
         <div className="Basket">
@@ -61,7 +59,7 @@ const Basket = () => {
                     </div>
                     <div>
                         <p>
-                            {basket.reduce((key, count) => {
+                            {bask?.reduce((key, count) => {
                                 return (key += Number(count.price)*(count?.count || 1))
                             }, 0)}
                             ₸

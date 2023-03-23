@@ -14,9 +14,7 @@ export const ADD_POST = "ADD_POST"
 export const productReducer = (state = initialState, action: IAction) => {
     switch (action.type) {
         case ADD_POST:
-            console.log(action);
-            
-            return { ...state, posts: action.posts }
+            return { ...state, posts: [...action.posts] }
         default:
             return state
     }

@@ -1,0 +1,86 @@
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useSearchParams } from "react-router-dom"
+import { addPost } from "../../app/Redux/Store/product"
+import { ICardApi } from "../../shared/api/CardApi"
+import "./Sort.scss"
+
+const Sort = () => {
+    const [sortType, setSortType] = useState<string>("По умолчанию")
+    const [visible, setVisble] = useState<boolean>(false)
+    const product = useSelector((state: any) => state.product.posts)
+    const dispatch = useDispatch()
+
+    const sortProduct = (type: string) => {
+        let res
+        setSortType(type)
+        switch (type) {
+            case "По убыванию цены":
+                res = product.sort((a: ICardApi, b: ICardApi) => {
+                    return (Number(b.price) || 0) - (Number(a.price) || 0)
+                })
+                break
+            case "По возрастанию цены":
+                res = product.sort((a: ICardApi, b: ICardApi) => {
+                    return (Number(a.price) || 0) - (Number(b.price) || 0)
+                })
+                break
+            case "По навзванию (А-Я)":
+                res = product.sort((a: ICardApi, b: ICardApi) => {
+                    return b?.name?.localeCompare(a?.name)
+                })
+                break
+            case "По названию (Я-А)":
+                res = product.sort((a: ICardApi, b: ICardApi) => {
+                    return a?.name?.localeCompare(b?.name)
+                })
+                break
+        }
+        console.log(res);
+        
+        dispatch(addPost(res))
+    }
+
+    return (
+        <div className="Sort">
+            <p>
+                Сортировка:{" "}
+                <span onClick={() => setVisble((p) => !p)}>{sortType}</span>
+            </p>
+            {visible && (
+                <div className="Sort__toggle">
+                    <p
+                        onClick={() => {
+                            sortProduct("По убыванию цены")
+                        }}
+                    >
+                        По убыванию цены
+                    </p>
+                    <p
+                        onClick={() => {
+                            sortProduct("По возрастанию цены")
+                        }}
+                    >
+                        По возрастанию цены
+                    </p>
+                    <p
+                        onClick={() => {
+                            sortProduct("По навзванию (А-Я)")
+                        }}
+                    >
+                        По навзванию (А-Я)
+                    </p>
+                    <p
+                        onClick={() => {
+                            sortProduct("По названию (Я-А)")
+                        }}
+                    >
+                        По названию (Я-А)
+                    </p>
+                </div>
+            )}
+        </div>
+    )
+}
+
+export default Sort

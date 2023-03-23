@@ -9,25 +9,30 @@ import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { CardApi, ICardApi } from "../../shared/api/CardApi"
-import { addBasket } from "../../entities/Redux/Store/basket"
+import { CardApi, CardApiId, ICardApi, ICardData } from "../../shared/api/CardApi"
+import { addBasket } from "../../app/Redux/Store/basket"
+import Toggle from "../../shared/UI/Toggle/Toggle"
+
+export interface ICardDataOne{
+    data: ICardApi
+}
 
 const Product = () => {
     const [count, setCount] = useState<number>(1)
-    const [prod, setProd] = useState<ICardApi[]>([])
+    const [prod, setProd] = useState<ICardApi>()
     const countMin = () => {
         if (count > 1) {
             setCount((p) => p - 1)
         }
     }
+
     const params = useParams()
 
     useEffect(() => {
-        CardApi().then((e: any) => {
-            let res = e.data.filter((key: ICardApi) => {
-                return key.id == Number(params.id) || 0
-            })
-            setProd(res)
+        CardApiId(params?.id || '0').then((e: any) => {
+            setProd(e?.data)
+            console.log(e);
+            
         })
     }, [])
 
@@ -46,28 +51,26 @@ const Product = () => {
             <Breadcrumbs
                 arr={[
                     { name: "Каталог", link: "/" },
-                    { name: `${prod[0]?.name}`, link: `/${params.id}` },
+                    { name: `${prod?.name}`, link: `/${params.id}` },
                 ]}
             />
             <div className="Product">
                 <div className="Product__img">
-                    <img src="https://ir.ozone.ru/s3/multimedia-y/wc1000/6423305530.jpg"></img>
+                    <img src={prod?.imgURL}></img>
                 </div>
                 <div className="Product__info">
                     <div className="Product__type">
                         <p>В наличии</p>
                     </div>
                     <div className="Product__name">
-                        <p>
-                            {prod[0]?.name}
-                        </p>
+                        <p>{prod?.name}</p>
                     </div>
                     <div className="Product__weight">
-                        <p>{prod[0]?.size}</p>
+                        <p>{prod?.size}</p>
                     </div>
                     <div className="Product__price">
                         <div className="Price">
-                            <h2>{prod[0]?.price} ₸</h2>
+                            <h2>{prod?.price} ₸</h2>
                         </div>
                         <div className="Count">
                             <Count
@@ -83,7 +86,7 @@ const Product = () => {
                         <div className="Button">
                             <MyButton
                                 onClick={() => {
-                                    addBaskets(prod[0])
+                                    addBaskets(prod)
                                 }}
                             >
                                 В корзину <img src={basket} />
@@ -106,9 +109,42 @@ const Product = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="Product__brand"></div>
-                    <div className="Product__discription"></div>
-                    <div className="Product__characteristics"></div>
+                    <div className="Product__brand">
+                        <p className="Pargaraph">
+                            Производитель: <span>{prod?.manufacturer}</span>
+                        </p>
+                        <p className="Pargaraph">
+                            Артикул: <span>{prod?.manufacturer}</span>
+                        </p>
+                        <p className="Pargaraph">
+                            Артикул: <span>{prod?.code}</span>
+                        </p>
+                        <p className="Pargaraph">
+                            Штрихкод: <span>{prod?.code}</span>
+                        </p>
+                    </div>
+                    <div className="Product__discription">
+                        <Toggle nameBtn="Описание">
+                            <p>{prod?.discription}</p>
+                        </Toggle>
+                    </div>
+                    <div className="Product__characteristics">
+                        <Toggle nameBtn="Характеристики">
+                            <p className="Pargaraph">
+                                Производитель:{" "}
+                                <span>{prod?.manufacturer}</span>
+                            </p>
+                            <p className="Pargaraph">
+                                Артикул: <span>{prod?.manufacturer}</span>
+                            </p>
+                            <p className="Pargaraph">
+                                Артикул: <span>{prod?.code}</span>
+                            </p>
+                            <p className="Pargaraph">
+                                Штрихкод: <span>{prod?.code}</span>
+                            </p>
+                        </Toggle>
+                    </div>
                 </div>
             </div>
         </div>

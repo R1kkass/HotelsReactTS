@@ -2,10 +2,9 @@ import MyButton from "../Buttons/MyButton/MyButton"
 import deletes from "../SVG/Delete/Delete.svg"
 import { ICardApi } from "../../api/CardApi"
 import { FC, useContext } from "react"
-import { ContextPost } from "../../../app/Context/ContextPost"
 import "./CardLine.scss"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
-import { addBasket } from "../../../entities/Redux/Store/basket"
+import { addBasket } from "../../../app/Redux/Store/basket"
 import Count from "../Count/Count"
 
 const CardLine: FC<ICardApi> = ({ id, name, price, imgURL, size, count }) => {

@@ -6,6 +6,7 @@ import LeftBlockCatalog from "../../widgets/LeftBlockCatalog/LeftBlockCatalog"
 import Card from "../../shared/UI/Card/Card"
 import PostCard from "../../features/PostCard/PostCard"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
+import Sort from "../../widgets/Sort/Sort"
 
 const Catalog = () => {
     return (
@@ -19,7 +20,7 @@ const Catalog = () => {
                 </div>
                 <div className="Catalog__sort">
                     <div>
-                        <p>Сортировка: Название</p>
+                        <Sort/>
                     </div>
                     <div className="Catalog__toggle">
                         <button>

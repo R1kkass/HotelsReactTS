@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export interface ICardApi{
-    id: number
+    id?: number
     imgURL: string
     size: string
     brand: string
@@ -10,6 +10,7 @@ export interface ICardApi{
     price: number
     name: string
     count?: number
+    discription?: string
 }
 
 export interface ICardData{
@@ -17,6 +18,30 @@ export interface ICardData{
 }
 
 export const CardApi = async()=>{
-    let res:ICardData[] = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market') 
+    let res:ICardData = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market') 
+    return res
+}
+
+export const DeleteCardApi = async(id:number)=>{
+    let res:ICardData = await axios.delete('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/'+id) 
+    return res
+}
+
+export const AddCardApi = async(post:ICardApi) =>{
+    let res:ICardData = await axios.post('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/',{
+        ...post
+    }) 
+    return res
+}
+
+export const EditCardApi = async(id: number, post: ICardApi)=>{
+    let res:ICardData = await axios.put('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/'+id,{
+        ...post
+    }) 
+    return res
+}
+
+export const CardApiId = async (id:string)=>{
+    let res:ICardData = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/'+id) 
     return res
 }
