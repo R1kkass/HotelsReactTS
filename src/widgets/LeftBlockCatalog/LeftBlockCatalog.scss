@@ -1,3 +1,5 @@
+@import '../../app/Styles/Variables.scss';
+
 .LeftBlockCatalog{
     width: 100%;
     display: flex;
@@ -32,7 +34,7 @@
             border-radius: 1000px;
             padding: 4px 14px;
             font-size: 12px;
-            color: #3F4E65;
+            color: $grayText;
             text-align: center;
         }
     }
@@ -42,7 +44,7 @@
             margin-top: 15px;
         }
         padding-bottom: 20px;
-        border-bottom: 1px dotted #3F4E65;
+        border-bottom: 1px dotted $grayText;
         margin-bottom: 20px;
         .InputButton{
             display: flex;

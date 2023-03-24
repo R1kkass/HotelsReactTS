@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useSearchParams } from "react-router-dom"
+import { IRedux } from "../../app/Redux/Store/Index"
 import { addPost } from "../../app/Redux/Store/product"
 import { ICardApi } from "../../shared/api/CardApi"
 import "./Sort.scss"
@@ -8,7 +9,7 @@ import "./Sort.scss"
 const Sort = () => {
     const [sortType, setSortType] = useState<string>("По умолчанию")
     const [visible, setVisble] = useState<boolean>(false)
-    const product = useSelector((state: any) => state.product.posts)
+    const product = useSelector((state: IRedux) => state.product.posts)
     const dispatch = useDispatch()
 
     const sortProduct = (type: string) => {
@@ -27,18 +28,18 @@ const Sort = () => {
                 break
             case "По навзванию (А-Я)":
                 res = product.sort((a: ICardApi, b: ICardApi) => {
-                    return b?.name?.localeCompare(a?.name)
+                    return a?.name?.localeCompare(b?.name)
                 })
                 break
             case "По названию (Я-А)":
                 res = product.sort((a: ICardApi, b: ICardApi) => {
-                    return a?.name?.localeCompare(b?.name)
+                    return b?.name?.localeCompare(a?.name)
                 })
                 break
         }
         console.log(res);
         
-        dispatch(addPost(res))
+        dispatch(addPost(res || []))
     }
 
     return (

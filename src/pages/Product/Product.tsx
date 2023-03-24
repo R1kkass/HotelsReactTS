@@ -6,20 +6,27 @@ import share from "../../shared/UI/SVG/Share/Share.svg"
 import basket from "../../shared/UI/SVG/Basket/BasketWhite.svg"
 import downloadBlack from "../../shared/UI/SVG/Download/DownloadBlack.svg"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { CardApi, CardApiId, ICardApi, ICardData } from "../../shared/api/CardApi"
+import {
+    CardApi,
+    CardApiId,
+    ICardApi,
+    ICardData,
+} from "../../shared/api/CardApi"
 import { addBasket } from "../../app/Redux/Store/basket"
 import Toggle from "../../shared/UI/Toggle/Toggle"
+import Loader from "../../shared/UI/Loader/Loader"
 
-export interface ICardDataOne{
+export interface ICardDataOne {
     data: ICardApi
 }
 
 const Product = () => {
     const [count, setCount] = useState<number>(1)
     const [prod, setProd] = useState<ICardApi>()
+    const [type, setType] = useState<boolean>(true)
     const countMin = () => {
         if (count > 1) {
             setCount((p) => p - 1)
@@ -29,22 +36,36 @@ const Product = () => {
     const params = useParams()
 
     useEffect(() => {
-        CardApiId(params?.id || '0').then((e: any) => {
-            setProd(e?.data)
-            console.log(e);
-            
+        CardApiId(params?.id || "0").then((e: ICardDataOne) => {
+            setProd(e?.data || [])
+            console.log(e)
         })
+        let res = []
+        let basket = JSON.parse(localStorage.getItem("basket") || "[]")
+        for (let i = 0; i < basket.length; i++) {
+            res.push(basket[i].id)
+        }
+
+        if (res?.includes(params.id)) {
+            setType(false)
+        }
     }, [])
 
-    const addBaskets = (post: any) => {
+    const addBaskets = (post: ICardApi) => {
         let basket = JSON.parse(localStorage.getItem("basket") || "[]")
         let posts = post
         posts.count = count
         basket.push(posts)
         localStorage.setItem("basket", JSON.stringify(basket))
         dispatch(addBasket(basket))
+        setType(false)
+
     }
     const dispatch = useDispatch()
+
+    if (!prod?.name) {
+        return <Loader />
+    }
 
     return (
         <div className="Container">
@@ -84,13 +105,21 @@ const Product = () => {
                             />
                         </div>
                         <div className="Button">
-                            <MyButton
-                                onClick={() => {
-                                    addBaskets(prod)
-                                }}
-                            >
-                                В корзину <img src={basket} />
-                            </MyButton>
+                            {type ? (
+                                <MyButton
+                                    onClick={() => {
+                                        addBaskets(prod)
+                                    }}
+                                >
+                                    В корзину <img src={basket} />
+                                </MyButton>
+                            ) : (
+                                <Link to="/basket">
+                                    <MyButton>
+                                        К корзине <img src={basket} />
+                                    </MyButton>
+                                </Link>
+                            )}
                         </div>
                     </div>
                     <div className="Product__buttons">
@@ -131,8 +160,7 @@ const Product = () => {
                     <div className="Product__characteristics">
                         <Toggle nameBtn="Характеристики">
                             <p className="Pargaraph">
-                                Производитель:{" "}
-                                <span>{prod?.manufacturer}</span>
+                                Производитель: <span>{prod?.manufacturer}</span>
                             </p>
                             <p className="Pargaraph">
                                 Артикул: <span>{prod?.manufacturer}</span>

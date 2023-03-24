@@ -6,9 +6,10 @@ import "./CardLine.scss"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
 import { addBasket } from "../../../app/Redux/Store/basket"
 import Count from "../Count/Count"
+import { Link } from "react-router-dom"
 
 const CardLine: FC<ICardApi> = ({ id, name, price, imgURL, size, count }) => {
-     const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const countFn = (id: number) => {
         let baskets = JSON.parse(localStorage.getItem("basket") || "[]")
@@ -49,29 +50,31 @@ const CardLine: FC<ICardApi> = ({ id, name, price, imgURL, size, count }) => {
 
     return (
         <div className="CardLine__product">
-            <div className="CardLine__img">
-                <img src={imgURL} />
-            </div>
-            <div className="CardLine__info">
-                <p>{size}</p>
-                <p>{name}</p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Facere, inventore.
-                </p>
-            </div>
-            <div className="CardLine__count">
-                <Count
-                    count={count || 1}
-                    onClickMinus={() => countFnMin(id)}
-                    onClickPlus={() => countFn(id)}
-                />
-            </div>
-            <div className="CardLine__price">
-                <p>{price}₸</p>
-            </div>
+            <Link to={`/product/${id}`}>
+                <div className="CardLine__img">
+                    <img src={imgURL} />
+                </div>
+                <div className="CardLine__info">
+                    <p>{size}</p>
+                    <p>{name}</p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Facere, inventore.
+                    </p>
+                </div>
+                <div className="CardLine__count">
+                    <Count
+                        count={count || 1}
+                        onClickMinus={() => countFnMin(id || 0)}
+                        onClickPlus={() => countFn(id || 0)}
+                    />
+                </div>
+                <div className="CardLine__price">
+                    <p>{price}₸</p>
+                </div>
+            </Link>
             <div className="CardLine__delete">
-                <MyButton onClick={() => deletePost(id)}>
+                <MyButton onClick={() => deletePost(id || 0)}>
                     <img src={deletes} alt="" />
                 </MyButton>
             </div>

@@ -9,6 +9,7 @@ import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
 import Sort from "../../widgets/Sort/Sort"
 
 const Catalog = () => {
+
     return (
         <div className="Catalog">
             <div className="Catalog__broadCrumbs">

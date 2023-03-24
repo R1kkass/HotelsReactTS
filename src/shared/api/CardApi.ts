@@ -17,6 +17,10 @@ export interface ICardData{
     data: ICardApi[]
 }
 
+export interface ICardDataOne{
+    data: ICardApi
+}
+
 export const CardApi = async()=>{
     let res:ICardData = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market') 
     return res
@@ -42,6 +46,6 @@ export const EditCardApi = async(id: number, post: ICardApi)=>{
 }
 
 export const CardApiId = async (id:string)=>{
-    let res:ICardData = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/'+id) 
+    let res:ICardDataOne = await axios.get('https://641757421cbdda1fa1577617.mockapi.io/cx/Market/'+id) 
     return res
 }

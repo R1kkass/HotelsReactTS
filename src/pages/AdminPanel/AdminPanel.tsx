@@ -7,6 +7,7 @@ import {
     ICardApi,
     ICardData,
 } from "../../shared/api/CardApi"
+import Loader from "../../shared/UI/Loader/Loader"
 import EditModal from "../../widgets/ModalAdd/EditModal"
 import ModalAdd from "../../widgets/ModalAdd/ModalAdd"
 import "./AdminPanel.scss"
@@ -17,23 +18,37 @@ const AdminPanel = () => {
     const [idEdit, setIdEdit] = useState<number>(0)
     const [visible, setVisible] = useState<boolean>(false)
     const [oneData, setOneData] = useState<ICardApi>()
+    const [loader, setLoader] = useState<boolean>(false)
 
     const delte = (id: number) => {
+        setLoader(true)
         DeleteCardApi(id).then(() => {
             CardApi().then((e: ICardData) => {
                 dispatch(addPost(e.data))
+                setLoader(false)
+            }).catch(()=>{
+                setLoader(false)
             })
         })
     }
 
     useEffect(() => {
+        setLoader(true)
         CardApi().then((e: ICardData) => {
             dispatch(addPost(e.data))
+            setLoader(false)
+        }).catch(()=>{
+            setLoader(false)
         })
     }, [])
 
+    if (!postPanel.length ) {
+        return <Loader />
+    }
+
     return (
         <div className="AdminPanel">
+            {loader && <Loader />}
             <ModalAdd />
             <EditModal
                 visible={visible}
@@ -66,8 +81,7 @@ const AdminPanel = () => {
                                 setVisible(true)
                                 setIdEdit(panel?.id || 0)
                                 setOneData(panel)
-                                console.log(oneData);
-                                
+                                console.log(oneData)
                             }}
                         >
                             Редактировать

@@ -1,4 +1,5 @@
 import { FC, useState } from "react"
+import { createPortal } from "react-dom"
 import MyButton from "../Buttons/MyButton/MyButton"
 import './Modal.scss'
 
@@ -8,14 +9,17 @@ const Modal: FC<{
     callback: () => void
 }> = ({ visible, children, callback }) => {
     return (
+        
         <>
-            {visible ? (
-                <div className="Modal" onClick={callback}>
-                    <div className="Modal__content" onClick={(e:React.MouseEvent)=>e.stopPropagation()}>{children}</div>
-                </div>
-            ) : (
-                ""
-            )}
+        {visible ? 
+        createPortal(
+            <div className="Modal" onClick={callback}>
+            <div className="Modal__content" onClick={(e:React.MouseEvent)=>e.stopPropagation()}>{children}</div>
+        </div>,
+            document.body
+        )
+        :''
+        }
         </>
     )
 }

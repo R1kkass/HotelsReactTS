@@ -34,13 +34,12 @@ const Card: FC<ICardApi> = ({
     useEffect(() => {
         let res = []
         let basket = JSON.parse(localStorage.getItem("basket") || "[]")
-        for(let i=0; i<basket.length; i++){
+        for (let i = 0; i < basket.length; i++) {
             res.push(basket[i].id)
         }
 
         if (res?.includes(id)) {
             setType(false)
-            
         }
     }, [])
 
@@ -70,8 +69,9 @@ const Card: FC<ICardApi> = ({
                 </div>
             </Link>
             <div className="Card__price">
-                <div className="Price">{price} T</div>
-
+                <div className="Price" title={price + "₸"}>
+                    <p>{price} ₸</p>
+                </div>
                 <div className="Button">
                     {type ? (
                         <MyButton

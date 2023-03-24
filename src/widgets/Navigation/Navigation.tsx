@@ -14,12 +14,12 @@ import basket from "../../shared/UI/SVG/Basket/Basket.svg"
 import logoFooter from "../../shared/UI/SVG/Logo/LogoFooter.svg"
 import { Children, FC, useContext, useEffect, useState } from "react"
 import MyInput from "../../shared/UI/Input/MyInput"
-import { ContextPost } from "../../app/Context/ContextPost"
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux/es/hooks/useSelector"
+import { IRedux } from "../../app/Redux/Store/Index"
 
 const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
-    const counts = useSelector((state: any) => state.basket.count)
+    const counts = useSelector((state: IRedux) => state.basket.count)
     return (
         <>
             <div className="Content">

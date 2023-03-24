@@ -6,6 +6,7 @@
     border-radius: 10px;
     height: 490px;
     padding-bottom: 29px;
+    overflow: hidden;
     &__img {
         display: flex;
         align-items: center;
@@ -47,11 +48,17 @@
     }
     &__price {
         margin-top: 15px;
+        
         display: flex;
         gap: 40px;
         align-items: center;
         .Price {
+            width: 80px;
+            white-space: nowrap;
+            overflow-wrap: normal;
+            text-overflow: ellipsis;
             font-weight: 700;
+            overflow: hidden;
         }
     }
     &__weight {
