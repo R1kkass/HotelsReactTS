@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom"
+import { Route, Routes, BrowserRouter, HashRouter } from "react-router-dom"
 import Navigation from "../widgets/Navigation/Navigation"
 import AdminPanel from "./AdminPanel/AdminPanel"
 import Basket from "./Basket/Basket"
@@ -7,7 +7,7 @@ import Product from "./Product/Product"
 
 const Routing = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Navigation>
                 <Routes>
                     <Route path="/basket" element={<Basket />} />
@@ -17,7 +17,7 @@ const Routing = () => {
                     <Route path="*" element={<h2>404</h2>} />
                 </Routes>
             </Navigation>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
