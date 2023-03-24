@@ -62,17 +62,18 @@ const CardLine: FC<ICardApi> = ({ id, name, price, imgURL, size, count }) => {
                         elit. Facere, inventore.
                     </p>
                 </div>
-                <div className="CardLine__count">
-                    <Count
-                        count={count || 1}
-                        onClickMinus={() => countFnMin(id || 0)}
-                        onClickPlus={() => countFn(id || 0)}
-                    />
-                </div>
-                <div className="CardLine__price">
-                    <p>{price}₸</p>
-                </div>
             </Link>
+            <div className="CardLine__count">
+                <Count
+                    count={count || 1}
+                    onClickMinus={() => countFnMin(id || 0)}
+                    onClickPlus={() => countFn(id || 0)}
+                />
+            </div>
+            <div className="CardLine__price">
+                <p>{price}₸</p>
+            </div>
+
             <div className="CardLine__delete">
                 <MyButton onClick={() => deletePost(id || 0)}>
                     <img src={deletes} alt="" />
