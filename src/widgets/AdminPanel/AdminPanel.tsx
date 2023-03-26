@@ -8,9 +8,9 @@ import {
     ICardData,
 } from "../../shared/api/CardApi"
 import Loader from "../../shared/UI/Loader/Loader"
-import EditModal from "../../widgets/ModalAdd/EditModal"
-import ModalAdd from "../../widgets/ModalAdd/ModalAdd"
-import "./AdminPanel.scss"
+import EditModal from "../ModalAdd/EditModal"
+import ModalAdd from "../ModalAdd/ModalAdd"
+import "../../pages/AdminPanel/AdminPanel.scss"
 
 const AdminPanel = () => {
     const dispatch = useDispatch()
@@ -23,28 +23,28 @@ const AdminPanel = () => {
     const delte = (id: number) => {
         setLoader(true)
         DeleteCardApi(id).then(() => {
-            CardApi().then((e: ICardData) => {
-                dispatch(addPost(e.data))
-                setLoader(false)
-            }).catch(()=>{
-                setLoader(false)
-            })
+            CardApi()
+                .then((e: ICardData) => {
+                    dispatch(addPost(e.data))
+                    setLoader(false)
+                })
+                .catch(() => {
+                    setLoader(false)
+                })
         })
     }
 
     useEffect(() => {
         setLoader(true)
-        CardApi().then((e: ICardData) => {
-            dispatch(addPost(e.data))
-            setLoader(false)
-        }).catch(()=>{
-            setLoader(false)
-        })
+        CardApi()
+            .then((e: ICardData) => {
+                dispatch(addPost(e.data))
+                setLoader(false)
+            })
+            .catch(() => {
+                setLoader(false)
+            })
     }, [])
-
-    if (!postPanel.length ) {
-        return <Loader />
-    }
 
     return (
         <div className="AdminPanel">
@@ -57,7 +57,7 @@ const AdminPanel = () => {
                 id={idEdit}
             />
             {postPanel?.map((panel: ICardApi) => (
-                <div className="AdminPanel__card">
+                <div key={panel.id} className="AdminPanel__card">
                     <div className="AdminPanel__img">
                         <img src={panel.imgURL} />
                     </div>

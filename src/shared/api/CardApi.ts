@@ -10,7 +10,8 @@ export interface ICardApi{
     price: number
     name: string
     count?: number
-    discription?: string
+    description?: string
+    type?: string[]
 }
 
 export interface ICardData{

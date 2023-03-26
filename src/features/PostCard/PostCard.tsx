@@ -14,12 +14,13 @@ const PostCard = () => {
     useEffect(() => {
         CardApi().then((e: ICardData) => {
             dispatch(addPost(e.data))
+            localStorage.setItem('products', JSON.stringify(e.data || '[]'))
         })
     }, [])
 
     if (!post.length) {
         return (
-            <Loader/>
+            <h1>Пусто</h1>
         )
     }
 

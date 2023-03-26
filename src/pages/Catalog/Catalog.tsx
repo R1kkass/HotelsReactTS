@@ -7,6 +7,7 @@ import Card from "../../shared/UI/Card/Card"
 import PostCard from "../../features/PostCard/PostCard"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
 import Sort from "../../widgets/Sort/Sort"
+import FilterTop from "../../shared/UI/Filter/FilterTop"
 
 const Catalog = () => {
 
@@ -33,17 +34,7 @@ const Catalog = () => {
                     </div>
                 </div>
             </div>
-            <div className="Catalog__thirdLine">
-                <div>
-                    <p>Уход за телом</p>
-                </div>
-                <div>
-                    <p>Уход за телом</p>
-                </div>
-                <div>
-                    <p>Уход за телом</p>
-                </div>
-            </div>
+            <FilterTop />
             <div className="Catalog__main">
                 <div className="Catalog__sortParams">
                     <LeftBlockCatalog/>

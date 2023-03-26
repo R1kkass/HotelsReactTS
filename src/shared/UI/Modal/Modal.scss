@@ -12,6 +12,8 @@
     height: 100vh;
     background: rgb(67, 67, 67, 0.3);
     backdrop-filter: blur(4px);
+    overflow-y: auto;
+
     &__content {
         display: flex;
         border-radius: 20px;
@@ -19,7 +21,8 @@
         width: 600px;
         background: rgb(67, 67, 67);
         position: fixed;
-        height: 700px;
+        min-height: 700px;
+        overflow-y: auto;
     }
     &__form{
         form{

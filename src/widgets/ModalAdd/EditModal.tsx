@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { addPost } from "../../app/Redux/Store/product"
@@ -8,6 +8,11 @@ import {
     EditCardApi,
     ICardApi,
 } from "../../shared/api/CardApi"
+import {
+    FilterApi,
+    IFilterApi,
+    IFilterApiData,
+} from "../../shared/api/FilterApi"
 import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
 import Modal from "../../shared/UI/Modal/Modal"
 
@@ -18,12 +23,19 @@ const EditModal: FC<{
     data?: ICardApi
 }> = ({ id, visible, setVisible, data }) => {
     const dispatch = useDispatch()
+    const [filterType, setFilterType] = useState()
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<ICardApi>()
+        getValues,
+    } = useForm<ICardApi>({
+        defaultValues: {
+            name: data?.name,
+            size: data?.size,
+        },
+    })
 
     const onSubmit = (data: ICardApi) => {
         EditCardApi(id, data).then((e) => {
@@ -34,11 +46,45 @@ const EditModal: FC<{
         })
     }
 
+    const [type, setType] = useState<string[]>([])
+    const [filtres, setFilter] = useState<IFilterApi[]>([])
+
+    const refType = useRef<HTMLSelectElement>(null)
+    const addType = () => {
+        if (refType?.current?.value) {
+            setType([...type, refType?.current?.value])
+        }
+    }
+
+    useEffect(() => {
+        FilterApi().then((e: IFilterApiData) => {
+            setFilter(e.data)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (id) {
+            setType(data?.type || [])
+        }
+        console.log(getValues())
+    }, [id])
+
+    const delte = (id: number) => {
+        setType(
+            type?.filter((key, i) => {
+                return i != id
+            })
+        )
+    }
+
     return (
         <>
             <Modal visible={visible} callback={() => setVisible(false)}>
                 <div className="ModalAdd__form">
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        <div>
+                            <label>Id товара: {id}</label>
+                        </div>
                         <div>
                             <label>
                                 Название
@@ -48,6 +94,7 @@ const EditModal: FC<{
                                     {...register("name", {
                                         required: true,
                                         maxLength: 30,
+                                        value: data?.name,
                                     })}
                                 />
                             </label>
@@ -84,6 +131,7 @@ const EditModal: FC<{
                             <label>
                                 Штрихкод
                                 <input
+                                    type="number"
                                     defaultValue={data?.code}
                                     placeholder="Штрихкод"
                                     {...register("code", {
@@ -112,6 +160,7 @@ const EditModal: FC<{
                             <label>
                                 Цена
                                 <input
+                                    type="number"
                                     defaultValue={data?.price}
                                     placeholder="Цена"
                                     {...register("price", {
@@ -140,15 +189,38 @@ const EditModal: FC<{
                             <label>
                                 Описание
                                 <input
-                                    defaultValue={data?.discription}
+                                    defaultValue={data?.description}
                                     placeholder="Описание"
-                                    {...register("discription", {
+                                    {...register("description", {
                                         required: true,
                                         min: 5,
                                         max: 99,
                                     })}
                                 />
                             </label>
+                        </div>
+                        <div>
+                            <label>
+                                Тип
+                                <select ref={refType}>
+                                    {filtres?.map((filter) => (
+                                        <option key={filter.id}>
+                                            {filter.title}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            <div>
+                                {type.map((key, id) => (
+                                    <div key={key + id}>
+                                        <p>{key}</p>
+                                        <button onClick={() => delte(id)}>
+                                            Удалить
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <div onClick={() => addType()}>Добавить в тип</div>
                         </div>
                         {Object.keys(errors).length ? (
                             <span>Поля пусты</span>

@@ -1,3 +1,6 @@
+@import '../../../app/Styles/Variables.scss';
+
+
 .CardLine {
     div {
         width: 100%;
@@ -25,7 +28,7 @@
                     margin-bottom: 10px;
                 }
                 &:nth-child(3) {
-                    color: #3f4e65;
+                    color: $grayText;
                     font-weight: 300;
                     font-size: 12px;
                 }
@@ -44,7 +47,7 @@
                     margin-bottom: 10px;
                 }
                 &:nth-child(3) {
-                    color: #3f4e65;
+                    color: $grayText;
                     font-weight: 300;
                     font-size: 12px;
                 }
@@ -58,8 +61,11 @@
         border-bottom: 1px dotted rgb(67, 67, 67, 0.3);
         padding-bottom: 50px;
         padding-top: 50px;
+        gap: 15px;
         a{
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px
         }
     }
     &__img {
@@ -100,8 +106,8 @@
             width: 100%;
         }
         display: flex;
-        margin-left: 88px;
-        margin-right: 86px;
+        margin-left: 5%;
+        margin-right: 5%;
         align-items: center;
         justify-content: center;
         font-weight: 700;

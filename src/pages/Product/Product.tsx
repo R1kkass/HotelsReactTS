@@ -64,7 +64,7 @@ const Product = () => {
     const dispatch = useDispatch()
 
     if (!prod?.name) {
-        return <Loader />
+        return <Loader/>
     }
 
     return (
@@ -93,6 +93,8 @@ const Product = () => {
                         <div className="Price">
                             <h2>{prod?.price} ₸</h2>
                         </div>
+                        {type ? (
+                            <>
                         <div className="Count">
                             <Count
                                 count={count}
@@ -105,14 +107,16 @@ const Product = () => {
                             />
                         </div>
                         <div className="Button">
-                            {type ? (
+                           
                                 <MyButton
                                     onClick={() => {
-                                        addBaskets(prod)
+                                        addBaskets(prod || {})
                                     }}
                                 >
                                     В корзину <img src={basket} />
                                 </MyButton>
+                                </div>
+                                </>
                             ) : (
                                 <Link to="/basket">
                                     <MyButton>
@@ -120,7 +124,7 @@ const Product = () => {
                                     </MyButton>
                                 </Link>
                             )}
-                        </div>
+                        
                     </div>
                     <div className="Product__buttons">
                         <div className="Share">
@@ -143,7 +147,7 @@ const Product = () => {
                             Производитель: <span>{prod?.manufacturer}</span>
                         </p>
                         <p className="Pargaraph">
-                            Артикул: <span>{prod?.manufacturer}</span>
+                            Бренд: <span>{prod?.brand}</span>
                         </p>
                         <p className="Pargaraph">
                             Артикул: <span>{prod?.code}</span>
@@ -154,7 +158,7 @@ const Product = () => {
                     </div>
                     <div className="Product__discription">
                         <Toggle nameBtn="Описание">
-                            <p>{prod?.discription}</p>
+                            <p>{prod?.description}</p>
                         </Toggle>
                     </div>
                     <div className="Product__characteristics">
@@ -163,13 +167,22 @@ const Product = () => {
                                 Производитель: <span>{prod?.manufacturer}</span>
                             </p>
                             <p className="Pargaraph">
-                                Артикул: <span>{prod?.manufacturer}</span>
+                                Бренд: <span>{prod?.brand}</span>
                             </p>
                             <p className="Pargaraph">
                                 Артикул: <span>{prod?.code}</span>
                             </p>
                             <p className="Pargaraph">
                                 Штрихкод: <span>{prod?.code}</span>
+                            </p>
+                            <p className="Paragraph">
+                                Вес: <span>{prod.size}</span>
+                            </p>
+                            <p className="Paragraph">
+                                Объём: <span>{prod.size}</span>
+                            </p>
+                            <p className="Paragraph">
+                                Кол-во в коробке: <span>{prod.size}</span>
                             </p>
                         </Toggle>
                     </div>

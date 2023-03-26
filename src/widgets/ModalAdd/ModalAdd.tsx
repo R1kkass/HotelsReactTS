@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
 import Modal from "../../shared/UI/Modal/Modal"
 import { useForm } from "react-hook-form"
@@ -11,10 +11,18 @@ import {
 import "./ModalAdd.scss"
 import { useDispatch } from "react-redux"
 import { addPost } from "../../app/Redux/Store/product"
+import {
+    FilterApi,
+    IArray,
+    IFilterApi,
+    IFilterApiData,
+} from "../../shared/api/FilterApi"
 
 const ModalAdd = () => {
     const [visible, setVisible] = useState<boolean>(false)
     const dispatch = useDispatch()
+    const [type, setType] = useState<string[]>([])
+    const [filtres, setFilter] = useState<IFilterApi[]>([])
 
     const {
         register,
@@ -22,12 +30,32 @@ const ModalAdd = () => {
         formState: { errors },
     } = useForm<ICardApi>()
     const onSubmit = (data: ICardApi) => {
-        AddCardApi(data).then((e) => {
+        const obj = { ...data, type: type }
+        AddCardApi(obj).then((e) => {
             setVisible((p) => !p)
             CardApi().then((e: ICardData) => {
                 dispatch(addPost(e.data))
             })
         })
+    }
+    const refType = useRef<HTMLSelectElement>(null)
+
+    const addType = () => {
+        if (refType?.current?.value) {
+            setType([...type, refType?.current?.value])
+        }
+    }
+
+    useEffect(() => {
+        FilterApi().then((e: IFilterApiData) => {
+            setFilter(e.data)
+        })
+    }, [])
+
+    const delte = (id: number)=>{
+        setType(type.filter((key,i)=>{
+            return i!=id
+        }))
     }
 
     return (
@@ -66,8 +94,7 @@ const ModalAdd = () => {
                                     placeholder="Размер"
                                     {...register("size", {
                                         required: true,
-                                        min: 3,
-                                        max: 10,
+                                        maxLength: 30,
                                     })}
                                 />
                             </label>
@@ -89,11 +116,11 @@ const ModalAdd = () => {
                             <label>
                                 Штрихкод
                                 <input
+                                    type="number"
                                     placeholder="Штрихкод"
                                     {...register("code", {
                                         required: true,
-                                        min: 5,
-                                        max: 15,
+                                        valueAsNumber: true,
                                     })}
                                 />
                             </label>
@@ -115,11 +142,11 @@ const ModalAdd = () => {
                             <label>
                                 Цена
                                 <input
+                                    type="number"
                                     placeholder="Цена"
                                     {...register("price", {
                                         required: true,
-                                        min: 3,
-                                        max: 10,
+                                        maxLength: 30,
                                     })}
                                 />
                             </label>
@@ -142,7 +169,7 @@ const ModalAdd = () => {
                                 Описание
                                 <input
                                     placeholder="Описание"
-                                    {...register("discription", {
+                                    {...register("description", {
                                         required: true,
                                         min: 5,
                                         max: 99,
@@ -150,7 +177,28 @@ const ModalAdd = () => {
                                 />
                             </label>
                         </div>
-                        {Object.keys(errors).length ? (
+                        <div>
+                            <label>
+                                Тип
+                                <select ref={refType}>
+                                    {filtres?.map((filter) => (
+                                        <option key={filter.id}>
+                                            {filter.title}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            <div>
+                                {type.map((key, i) => (
+                                    <div key={key}>
+                                        <p>{key}</p>
+                                        <button onClick={()=>delte(i)}>Удалить</button>
+                                    </div>
+                                ))}
+                            </div>
+                            <div onClick={() => addType()}>Добавить в тип</div>
+                        </div>
+                        {Object.keys(errors).length || type.length ? (
                             <span>Поля пусты</span>
                         ) : (
                             ""

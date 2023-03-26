@@ -1,3 +1,6 @@
+@import '../../../app/Styles/Variables.scss';
+
+
 .Card {
     width: 326px;
     padding: 20px;
@@ -22,7 +25,7 @@
         p {
             margin-bottom: 5px;
             font-size: 14px;
-            color: #3F4E65;
+            color: $grayText;
             span {
                 color: #111111;
                 font-weight: 600;

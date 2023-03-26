@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useSearchParams } from "react-router-dom"
 import { IRedux } from "../../app/Redux/Store/Index"
@@ -6,8 +6,14 @@ import { addPost } from "../../app/Redux/Store/product"
 import { ICardApi } from "../../shared/api/CardApi"
 import "./Sort.scss"
 
+const url = new URLSearchParams(window.location.search)
+
 const Sort = () => {
-    const [sortType, setSortType] = useState<string>("По умолчанию")
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const [sortType, setSortType] = useState<string>(
+        searchParams.get("sort") || "По умолчанию"
+    )
     const [visible, setVisble] = useState<boolean>(false)
     const product = useSelector((state: IRedux) => state.product.posts)
     const dispatch = useDispatch()
@@ -37,10 +43,21 @@ const Sort = () => {
                 })
                 break
         }
-        console.log(res);
-        
+        console.log(res)
+        if (!searchParams.get("sort") || searchParams.get('sort')!=type) {
+            searchParams.set("sort", type)
+            setSearchParams(searchParams.toString())
+        }
         dispatch(addPost(res || []))
     }
+
+    useEffect(() => {
+        const res = url.get("sort")
+        
+        if (res) {
+            sortProduct(res)
+        }
+    }, [])
 
     return (
         <div className="Sort">

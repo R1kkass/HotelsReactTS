@@ -1,4 +1,14 @@
 @import '../../app/Styles/Variables.scss';
+@media screen and (max-width: 700px) {
+    .LeftBlockCatalog{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+}
+@media screen and (min-width: 700px) {
 
 .LeftBlockCatalog{
     width: 100%;
@@ -61,4 +71,4 @@
         }
     }
     
-}
+}}

@@ -1,0 +1,32 @@
+@import "../../app/Styles/Variables";
+
+.Admin {
+    display: flex;
+    width: 82%;
+    margin: 0 auto;
+    &__tabs {
+        width: 300px;
+        min-height: calc(100vh - 500px);
+        border-left: 1px solid $yellow;
+        border-right: 1px solid $yellow;
+        box-shadow: 0px 3px 2px 2px $yellow;
+        overflow: hidden;
+        top: 20px;
+
+        div {
+            width: 300px;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            position: -webkit-sticky;
+            &:hover {
+                color: #fff;
+                cursor: pointer;
+                background-color: $yellow;
+            }
+        }
+    }
+    &__window {
+        width: 100%;
+    }
+}
