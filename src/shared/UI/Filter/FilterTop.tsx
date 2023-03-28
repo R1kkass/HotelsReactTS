@@ -8,7 +8,6 @@ import "./Filter.scss"
 
 const url = new URLSearchParams(window.location.search)
 
-
 const FilterTop = () => {
     const [filtres, setFilter] = useState<IFilterApi[]>([])
 
@@ -19,6 +18,7 @@ const FilterTop = () => {
         let per = searchParams.get("param")
         if (per != param || !per) {
             searchParams.set("param", param)
+            searchParams.set("page", "1")
             setSearchParams(searchParams)
         }
         dispatch(filterPost(searchParams))
@@ -38,7 +38,15 @@ const FilterTop = () => {
         <div className="Catalog__thirdLine">
             {filtres?.map(({ title, array, id }) => (
                 <>
-                    <div key={title} onClick={() => filterProductw(title)}>
+                    <div
+                        className={
+                            searchParams.get("param")?.includes(title)
+                                ? "Catalog__active"
+                                : ""
+                        }
+                        key={title}
+                        onClick={() => filterProductw(title)}
+                    >
                         <p>{title}</p>
                     </div>
                 </>

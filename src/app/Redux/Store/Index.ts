@@ -5,7 +5,7 @@ import { productReducer } from "./product"
 
 export interface IRedux {
     basket: { basket: ICardApi[], count: number }
-    product: { posts: ICardApi[] }
+    product: { posts: ICardApi[], length: number }
 }
 
 const rootReducers = combineReducers({

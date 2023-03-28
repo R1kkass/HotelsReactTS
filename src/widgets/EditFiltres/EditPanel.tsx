@@ -46,6 +46,7 @@ const EditPanel = () => {
     }
 
     const fetchFilter = ()=>{
+        setLoader(true)
         FilterApi()
             .then((e: IFilterApiData) => {
                 setFiltres(e.data)
@@ -72,7 +73,7 @@ const EditPanel = () => {
     return (
         <div className="AdminPanel">
             {loader && <Loader />}
-            <ModalAddFilter />
+            <ModalAddFilter callback={fetchFilter}/>
             <ModalEditPanel callback ={fetchFilter} post={oneData} visible={visible} setVisible={()=>setVisible(false)}/>
             <div className="Filter">
                 {filtres?.map(({ title, array, id }) => (

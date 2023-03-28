@@ -18,6 +18,7 @@
         gap: 10px;
         border-bottom: 1px solid rgb(67, 67, 67, 0.2);
     }
+
     &__address {
         display: flex;
         gap: 10px;
@@ -95,6 +96,18 @@
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid rgb(67, 67, 67, 0.2);
+        @media screen and (max-width: 700px) {
+            min-height: 45px;
+        }
+    }
+    &__ellipse {
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $yellow;
     }
 }
 

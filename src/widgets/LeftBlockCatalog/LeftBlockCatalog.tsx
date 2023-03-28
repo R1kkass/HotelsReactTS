@@ -12,7 +12,7 @@ const LeftBlockCatalog = () => {
     const [query, setQuery] = useState<boolean>(false)
 
     useEffect(() => {
-        var x: any = window.matchMedia("(max-width: 700px)")
+        var x: any = window.matchMedia("(max-width: 800px)")
         function myFunction(x: any) {
             if (x.matches) {
                 setQuery(true)
@@ -30,9 +30,6 @@ const LeftBlockCatalog = () => {
             <Toggle nameBtn="Показать всё">
                 <div className="LeftBlockCatalog">
                    <FilterBlock/>
-                    <div>
-                        <Filter />
-                    </div>
                 </div>
             </Toggle>
         )

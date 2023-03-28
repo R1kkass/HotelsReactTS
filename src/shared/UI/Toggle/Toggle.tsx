@@ -3,7 +3,7 @@ import './Toggle.scss'
 import polygonBottom from '../SVG/Polygon/PolygonBottom.svg'
 import polygonTop from '../SVG/Polygon/PolygonTop.svg'
 
-const Toggle:FC<{children: React.ReactNode, nameBtn: string}> = ({children, nameBtn}) => {
+const Toggle:FC<{children: React.ReactNode, nameBtn: string, num?: number}> = ({children, nameBtn,num=0}) => {
     const [bol, setBol] = useState<boolean>(false)
 
     if (bol) {

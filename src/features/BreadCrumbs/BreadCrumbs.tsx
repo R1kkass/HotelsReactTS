@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import './BreadCrumbs.scss'
+import crumb from '../../shared/UI/SVG/Crumbs/Crumb.svg'
 
 interface IArrs{
     arr:TArr[]
@@ -16,7 +17,7 @@ const Breadcrumbs:FC<IArrs> = ({arr}) => {
       <div className="BreadCrumbs">
         {arr.map(({name, link})=>(
             <Link to={`${link}`}>
-                {name} / {''}
+                {name} <img src={crumb}/> {''}
             </Link>
         )
         )}

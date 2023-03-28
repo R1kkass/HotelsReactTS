@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { ICardApi } from "../../shared/api/CardApi"
@@ -7,13 +7,12 @@ import {
     FilterApiPost,
     IArray,
     IFilterApi,
+    IFilterApiData,
 } from "../../shared/api/FilterApi"
 import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
 import Modal from "../../shared/UI/Modal/Modal"
 
-
-
-const ModalAddFilter = () => {
+const ModalAddFilter: FC<{ callback: () => void }> = ({ callback }) => {
     const [visible, setVisible] = useState<boolean>(false)
     const [paramFilter, setParamFilter] = useState<IArray[]>([])
 
@@ -31,20 +30,23 @@ const ModalAddFilter = () => {
     const addCategory = () => {
         if (refSize?.current?.value) {
             setParamFilter([...paramFilter, { name: refSize?.current?.value }])
+            refSize.current.value = ""
         }
     }
 
     const addParam = () => {
-        if (refName?.current?.value && paramFilter.length) {
+        if (refName?.current?.value) {
             const r: IFilterApi = {
                 title: refName?.current?.value || "",
                 array: paramFilter,
             }
-            FilterApiPost(r).then((e) => {})
+            FilterApiPost(r).then((e) => {
+                setVisible(false)
+                callback()
+                setParamFilter([])
+            })
         }
     }
-
-    
 
     return (
         <>
@@ -91,7 +93,13 @@ const ModalAddFilter = () => {
                         >
                             Добавить фильтер
                         </button>
-                        <input onClick={(e)=>{e.preventDefault();addParam()}} type="submit" />
+                        <input
+                            onClick={(e) => {
+                                e.preventDefault()
+                                addParam()
+                            }}
+                            type="submit"
+                        />
                     </form>
                 </div>
             </Modal>

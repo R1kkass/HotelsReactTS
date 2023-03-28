@@ -10,7 +10,7 @@ import logo from "../../shared/UI/SVG/Logo/Logo.svg"
 import catalog from "../../shared/UI/SVG/Catalog/Catalog.svg"
 import address from "../../shared/UI/SVG/Address/Address.svg"
 import email from "../../shared/UI/SVG/Email/Email.svg"
-import basket from "../../shared/UI/SVG/Basket/Basket.svg"
+import baskets from "../../shared/UI/SVG/Basket/Basket.svg"
 import logoFooter from "../../shared/UI/SVG/Logo/LogoFooter.svg"
 import { Children, FC, useContext, useEffect, useState } from "react"
 import MyInput from "../../shared/UI/Input/MyInput"
@@ -18,13 +18,27 @@ import { Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux/es/hooks/useSelector"
 import { IRedux } from "../../app/Redux/Store/Index"
 import { ICardApi } from "../../shared/api/CardApi"
+import search from "../../shared/UI/SVG/Search/Search.svg"
+import LeftBlockCatalog from "../LeftBlockCatalog/LeftBlockCatalog"
+import LeftBlockMobile from "../../shared/UI/LeftBlockMobile/LeftBlockMobile"
+import mobile from "../../shared/UI/SVG/Mobile/Mobile.svg"
 
 const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
     const counts = useSelector((state: IRedux) => state.basket.count)
     const [query, setQuery] = useState<boolean>(false)
 
+    const basket = JSON.parse(localStorage.getItem("basket") || "[]")?.reduce(
+        (key: number, count: ICardApi) => {
+            console.log(key)
+            return (key = key + Number(count.price) * Number(count?.count || 1))
+        },
+        0
+    )
+
+    const bask = useSelector((state: IRedux) => state.basket.basket)
+
     useEffect(() => {
-        var x: any = window.matchMedia("(max-width: 700px)")
+        var x: any = window.matchMedia("(max-width: 800px)")
         function myFunction(x: any) {
             if (x.matches) {
                 setQuery(true)
@@ -34,72 +48,75 @@ const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
         }
         myFunction(x)
         x.addListener(myFunction)
+
         return x.removeListener(myFunction)
     }, [])
+
+    const [visible, setVisible] = useState<boolean>(false)
+
     if (query) {
         return (
             <>
+                <LeftBlockMobile
+                    visible={visible}
+                    setVisible={() => setVisible(false)}
+                >
+                    <div className="Navigation__address">
+                        <img src={address} />
+                        <div>
+                            <p>г. Кокчетав, ул. Ж. Ташенова 129Б</p>
+                            <p>(Рынок Восточный)</p>
+                        </div>
+                    </div>
+                    <div className="Navigation__email">
+                        <img src={email} />
+                        <div>
+                            <p>opt.sultan@mail.ru</p>
+                            <p>На связи в любое время</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>О компании</p>
+                    </div>
+                    <div>
+                        <p>Доставка и оплата</p>
+                    </div>
+                    <div>
+                        <p>Возврат</p>
+                    </div>
+                    <div>
+                        <p>Контакты</p>
+                    </div>
+                </LeftBlockMobile>
                 <div className="Content">
                     <div className="Navigation">
                         <div className="Navigation__firstLine">
-                            <div className="Navigation__container">
-                                <div className="Navigation__address">
-                                    <img src={address} />
-                                    <div>
-                                        <p>г. Кокчетав, ул. Ж. Ташенова 129Б</p>
-                                        <p>(Рынок Восточный)</p>
-                                    </div>
-                                </div>
-                                <div className="Navigation__email">
-                                    <img src={email} />
-                                    <div>
-                                        <p>opt.sultan@mail.ru</p>
-                                        <p>На связи в любое время</p>
-                                    </div>
-                                </div>
+                            <div className="Navigation__container"></div>
+                            <div
+                                onClick={() => setVisible(true)}
+                                className="Navigation__ellipse"
+                            ><img src={mobile} alt="" /></div>
+                            <div>
+                                <img src={logo} />
                             </div>
-                            <div className="Navigation__navBar">
-                                <div>
-                                    <p>О компании</p>
-                                </div>
-                                <div>
-                                    <p>Доставка и оплата</p>
-                                </div>
-                                <div>
-                                    <p>Возврат</p>
-                                </div>
-                                <div>
-                                    <p>Контакты</p>
-                                </div>
+                            <div>
+                                <Link to="/basket">
+                                    <div className="SecondLine__basket">
+                                        <img src={baskets} />
+                                        <div className="dottedBasket">
+                                            <p>{counts}</p>
+                                        </div>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                         <div className="Navigation__secondLine">
-                            <img src={logo} />
                             <Link to="/">
                                 <div className="SecondLine__button">
-                                    <MyButton>
-                                        Каталог
-                                        <img src={catalog} />
-                                    </MyButton>
-                                </div>
-                            </Link>
-
-                            <div className="SecondLine__search">
-                                <MyInput />
-                            </div>
-                            
-                            <Link to="/basket">
-                                <div className="SecondLine__basket">
-                                    <img src={basket} />
-                                    <div className="dottedBasket">
-                                        <p>{counts}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                            <Link to="/basket">
-                                <div className="SecondLine__price">
-                                    <p>Корзина</p>
-                                    <p>12 478 ₸</p>
+                                    <img src={catalog} />
+                                    Каталог
+                                    <img src={search} />
+                                    Поиск
                                 </div>
                             </Link>
                         </div>
@@ -240,7 +257,7 @@ const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
                         </div>
                         <Link to="/basket">
                             <div className="SecondLine__basket">
-                                <img src={basket} />
+                                <img src={baskets} />
                                 <div className="dottedBasket">
                                     <p>{counts}</p>
                                 </div>
@@ -249,10 +266,14 @@ const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
                         <Link to="/basket">
                             <div className="SecondLine__price">
                                 <p>Корзина</p>
-                                <p>{JSON.parse(localStorage.getItem('basket') || '[]')?.reduce((key:number, count:ICardApi) => {
-                                return (key = Number(count.price)*(count?.count || 1))
-                            }, 0)}
-                            ₸</p>
+                                <p>
+                                    {bask?.reduce((key, count) => {
+                                        return (key +=
+                                            Number(count.price) *
+                                            (count?.count || 1))
+                                    }, 0) || basket}
+                                    ₸
+                                </p>
                             </div>
                         </Link>
                     </div>

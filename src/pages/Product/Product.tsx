@@ -72,7 +72,7 @@ const Product = () => {
             <Breadcrumbs
                 arr={[
                     { name: "Каталог", link: "/" },
-                    { name: `${prod?.name}`, link: `/${params.id}` },
+                    { name: `${prod?.name}`, link: `/product/${params.id}` },
                 ]}
             />
             <div className="Product">
@@ -175,13 +175,13 @@ const Product = () => {
                             <p className="Pargaraph">
                                 Штрихкод: <span>{prod?.code}</span>
                             </p>
-                            <p className="Paragraph">
+                            <p className="Pargaraph">
                                 Вес: <span>{prod.size}</span>
                             </p>
-                            <p className="Paragraph">
+                            <p className="Pargaraph">
                                 Объём: <span>{prod.size}</span>
                             </p>
-                            <p className="Paragraph">
+                            <p className="Pargaraph">
                                 Кол-во в коробке: <span>{prod.size}</span>
                             </p>
                         </Toggle>

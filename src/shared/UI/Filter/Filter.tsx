@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 import { IRedux } from "../../../app/Redux/Store/Index"
 import { addPost, filterPost } from "../../../app/Redux/Store/product"
 import { FilterApi, IFilterApi, IFilterApiData } from "../../api/FilterApi"
@@ -10,21 +10,18 @@ const Filter = () => {
     const [filtres, setFilter] = useState<IFilterApi[]>([])
     const product  = useSelector((state:IRedux)=>state.product.posts)
     const dispatch = useDispatch()
-    const history = new URLSearchParams();
-    const filterProductw = (param: string)=>{
-        
-        const prodLocal = JSON.parse(localStorage.getItem('products') || '[]')
-        console.log(prodLocal);
-        
-        let res = prodLocal.filter((prod: any)=>{
-            console.log(prod?.type);
-            
-            return prod?.type.includes(param)
-        })
-        // dispatch(filterPost(sear))
-        history.append('filter', param)
-    }
 
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const filterProductw = (param: string) => {
+        let per = searchParams.get("param")
+        if (per != param || !per) {
+            searchParams.set("param", param)
+            searchParams.set("page", "1")
+            setSearchParams(searchParams)
+        }
+        dispatch(filterPost(searchParams))
+    }
 
     useEffect(() => {
         FilterApi().then((e: IFilterApiData) => {
@@ -37,7 +34,11 @@ const Filter = () => {
             {filtres?.map(({ title, array, id }) => (
                 <>
                     <div className="Filter__block">
-                        <h3 onClick={()=>filterProductw(title)}>{title}</h3>
+                        <h3  className={
+                            searchParams.get("param")?.includes(title)
+                                ? "Filter__active"
+                                : ""
+                        } onClick={()=>filterProductw(title)}>{title}</h3>
                     
                     {array?.map(({ name }) => (
                         <div className="Filter__text">

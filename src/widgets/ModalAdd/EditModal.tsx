@@ -30,12 +30,7 @@ const EditModal: FC<{
         handleSubmit,
         formState: { errors },
         getValues,
-    } = useForm<ICardApi>({
-        defaultValues: {
-            name: data?.name,
-            size: data?.size,
-        },
-    })
+    } = useForm<ICardApi>()
 
     const onSubmit = (data: ICardApi) => {
         EditCardApi(id, data).then((e) => {
@@ -107,8 +102,7 @@ const EditModal: FC<{
                                     placeholder="Размер"
                                     {...register("size", {
                                         required: true,
-                                        min: 3,
-                                        max: 10,
+                                        maxLength: 30,
                                     })}
                                 />
                             </label>
@@ -135,9 +129,7 @@ const EditModal: FC<{
                                     defaultValue={data?.code}
                                     placeholder="Штрихкод"
                                     {...register("code", {
-                                        required: true,
-                                        min: 5,
-                                        max: 15,
+                                        maxLength: 30,
                                     })}
                                 />
                             </label>
@@ -161,12 +153,10 @@ const EditModal: FC<{
                                 Цена
                                 <input
                                     type="number"
-                                    defaultValue={data?.price}
                                     placeholder="Цена"
                                     {...register("price", {
                                         required: true,
-                                        min: 3,
-                                        max: 10,
+                                        maxLength: 30,
                                     })}
                                 />
                             </label>

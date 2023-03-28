@@ -8,13 +8,13 @@ import PostCard from "../../features/PostCard/PostCard"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
 import Sort from "../../widgets/Sort/Sort"
 import FilterTop from "../../shared/UI/Filter/FilterTop"
+import Pagination from "../../widgets/Pagination/Pagination"
 
 const Catalog = () => {
-
     return (
         <div className="Catalog">
             <div className="Catalog__broadCrumbs">
-                <Breadcrumbs arr={[{name:'Каталог', link: '/'}]}/>
+                <Breadcrumbs arr={[{ name: "Каталог", link: "/" }]} />
             </div>
             <div className="Catalog__secondLine">
                 <div>
@@ -22,7 +22,7 @@ const Catalog = () => {
                 </div>
                 <div className="Catalog__sort">
                     <div>
-                        <Sort/>
+                        <Sort />
                     </div>
                     <div className="Catalog__toggle">
                         <button>
@@ -37,10 +37,11 @@ const Catalog = () => {
             <FilterTop />
             <div className="Catalog__main">
                 <div className="Catalog__sortParams">
-                    <LeftBlockCatalog/>
+                    <LeftBlockCatalog />
                 </div>
                 <div className="Catalog__product">
-                    <PostCard/>
+                    <PostCard />
+                    <Pagination />
                 </div>
             </div>
         </div>
