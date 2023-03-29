@@ -71,9 +71,9 @@ const ModalAddFilter: FC<{ callback: () => void }> = ({ callback }) => {
                                 />
                             </label>
                         </div>
-
+                        <div className="EditModal__params">
                         {paramFilter?.map((key, i) => (
-                            <div className="Category">
+                            <div >
                                 <label>{key.name}</label>
                                 <button
                                     onClick={(e) => {
@@ -81,10 +81,11 @@ const ModalAddFilter: FC<{ callback: () => void }> = ({ callback }) => {
                                         deleteCategory(i)
                                     }}
                                 >
-                                    Удалить
+                                    X
                                 </button>
                             </div>
                         ))}
+                        </div>
                         <button
                             onClick={(e) => {
                                 e.preventDefault()

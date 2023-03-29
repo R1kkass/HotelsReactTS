@@ -2,6 +2,7 @@ import MyButton from "../Buttons/MyButton/MyButton"
 import basket from "../SVG/Basket/BasketWhite.svg"
 import "./Card.scss"
 import bottle from "../SVG/Weight/Bottle.svg"
+
 import box from "../SVG/Weight/Box.svg"
 import { FC, useContext, useEffect, useState } from "react"
 import { ICardApi } from "../../api/CardApi"
@@ -50,8 +51,8 @@ const Card: FC<ICardApi> = ({
                     <img src={imgURL} />
                 </div>
                 <div className="Card__weight">
-                    <img src={bottle} />
-                    {size} мл
+                    <img src={size.includes('Х') ? box : bottle} />
+                    {size}
                 </div>
                 <div className="Card__name">
                     <p>{name}</p>

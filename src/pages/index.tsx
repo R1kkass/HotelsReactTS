@@ -9,7 +9,7 @@ import Admin from "./AdminPanel/Admin"
 
 const Routing = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Navigation>
                 <Routes>
                     <Route path="/basket" element={<Basket />} />
@@ -20,7 +20,7 @@ const Routing = () => {
                     <Route path="*" element={<h2>404</h2>} />
                 </Routes>
             </Navigation>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 

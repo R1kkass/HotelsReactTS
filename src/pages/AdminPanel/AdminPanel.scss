@@ -5,6 +5,9 @@
     flex-direction: column;
     margin-bottom: 5px;
     margin-top: 5px;
+    @media screen and (max-width: 800px) {
+        width: 100%;       
+    }
     img {
         height: 100%;
         object-fit: contain;
@@ -21,6 +24,10 @@
         box-shadow: 0 0 3px 2px #ffc85e;
         border: 1px solid #ffc85e;
         background: #f6f6f6;
+        @media screen and (max-width: 800px) {
+            min-width: 100%;   
+            flex-direction: column;
+        }
     }
     &__img {
         height:  200px;

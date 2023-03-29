@@ -1,17 +1,29 @@
 import { FC, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
-import { FilterApi, FilterApiPut, IArray, IFilterApi, IFilterApiData } from "../../shared/api/FilterApi"
+import {
+    FilterApi,
+    FilterApiPut,
+    IArray,
+    IFilterApi,
+    IFilterApiData,
+} from "../../shared/api/FilterApi"
 import Modal from "../../shared/UI/Modal/Modal"
+import "./EditModal.scss"
 
-interface IModalEditPanel{
-    visible: boolean,
-    setVisible: (bol: boolean)=>void,
-    post?:IFilterApi
-    callback: ()=>void
+interface IModalEditPanel {
+    visible: boolean
+    setVisible: (bol: boolean) => void
+    post?: IFilterApi
+    callback: () => void
 }
 
-const ModalEditPanel: FC<IModalEditPanel> = ({ callback, post,visible, setVisible }) => {
-    const [type, setType] = useState<IArray[] >(post?.array || [])
+const ModalEditPanel: FC<IModalEditPanel> = ({
+    callback,
+    post,
+    visible,
+    setVisible,
+}) => {
+    const [type, setType] = useState<IArray[]>(post?.array || [])
 
     const {
         register,
@@ -19,23 +31,22 @@ const ModalEditPanel: FC<IModalEditPanel> = ({ callback, post,visible, setVisibl
         formState: { errors },
     } = useForm<IFilterApi>()
 
-    const onSubmit = (data:IFilterApi)=>{
-        console.log(post);
-        let dat = {...data, array: type}
-        FilterApiPut(Number(post?.id) || 0, dat).then((e)=>{
+    const onSubmit = (data: IFilterApi) => {
+        console.log(post)
+        let dat = { ...data, array: type }
+        FilterApiPut(Number(post?.id) || 0, dat).then((e) => {
             callback()
         })
     }
     const refType = useRef<HTMLInputElement>(null)
 
-    const addType = ()=>{
-        
-        if(refType?.current?.value){
-            setType([...type, {name: refType.current.value}])
+    const addType = () => {
+        if (refType?.current?.value) {
+            setType([...type, { name: refType.current.value }])
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setType(post?.array || [])
     }, [post])
 
@@ -67,26 +78,25 @@ const ModalEditPanel: FC<IModalEditPanel> = ({ callback, post,visible, setVisibl
                     <div>
                         <label>
                             Название
-                            <input
-                                ref={refType}
-                                placeholder="Тип"
-                            />
+                            <input ref={refType} placeholder="Тип" />
                         </label>
-                        <div onClick={() => addType()}>Добавить в тип</div>
-                        <div>
-                            {type?.map((key, i)=>(
-                                <div key={key.name+i}>
+                        <div className="EditModal__params">
+                            {type?.map((key, i) => (
+                                <div key={key.name + i}>
                                     <p>{key.name}</p>
-                                    <button onClick={()=>delte(i)}>Удалить</button>
+                                    <button onClick={() => delte(i)}>Х</button>
                                 </div>
                             ))}
                         </div>
                     </div>
+
                     {Object.keys(errors).length || type.length ? (
                         <span>Поля пусты</span>
                     ) : (
                         ""
                     )}
+                    <button onClick={() => addType()}>Добавить в тип</button>
+
                     <input type="submit" />
                 </form>
             </div>

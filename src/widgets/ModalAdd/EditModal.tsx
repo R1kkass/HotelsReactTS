@@ -200,7 +200,7 @@ const EditModal: FC<{
                                     ))}
                                 </select>
                             </label>
-                            <div>
+                            <div className="EditModal__params">
                                 {type.map((key, id) => (
                                     <div key={key + id}>
                                         <p>{key}</p>
@@ -210,7 +210,7 @@ const EditModal: FC<{
                                     </div>
                                 ))}
                             </div>
-                            <div onClick={() => addType()}>Добавить в тип</div>
+                            <button onClick={() => addType()}>Добавить в тип</button>
                         </div>
                         {Object.keys(errors).length ? (
                             <span>Поля пусты</span>

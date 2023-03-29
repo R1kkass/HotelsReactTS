@@ -52,10 +52,12 @@ const ModalAdd = () => {
         })
     }, [])
 
-    const delte = (id: number)=>{
-        setType(type.filter((key,i)=>{
-            return i!=id
-        }))
+    const delte = (id: number) => {
+        setType(
+            type.filter((key, i) => {
+                return i != id
+            })
+        )
     }
 
     return (
@@ -82,7 +84,7 @@ const ModalAdd = () => {
                                     placeholder="Название"
                                     {...register("name", {
                                         required: true,
-                                        maxLength: 30,
+                                        maxLength: 40,
                                     })}
                                 />
                             </label>
@@ -188,21 +190,26 @@ const ModalAdd = () => {
                                     ))}
                                 </select>
                             </label>
-                            <div>
+                            <div className="EditModal__params">
                                 {type.map((key, i) => (
                                     <div key={key}>
                                         <p>{key}</p>
-                                        <button onClick={()=>delte(i)}>Удалить</button>
+                                        <button onClick={() => delte(i)}>
+                                            Удалить
+                                        </button>
                                     </div>
                                 ))}
                             </div>
-                            <div onClick={() => addType()}>Добавить в тип</div>
                         </div>
                         {Object.keys(errors).length || type.length ? (
                             <span>Поля пусты</span>
                         ) : (
                             ""
                         )}
+                        <button onClick={() => addType()}>
+                            Добавить в тип
+                        </button>
+
                         <input type="submit" />
                     </form>
                 </div>

@@ -20,7 +20,7 @@ import ModalAdd from "../ModalAdd/ModalAdd"
 import ModalAddFilter from "../ModalFilterEdit/ModalAddFilter"
 import "../../pages/AdminPanel/AdminPanel.scss"
 import ModalEditPanel from "../ModalEditPanel/ModalEditPanel"
-
+import Toggle from "../../shared/UI/Toggle/Toggle"
 
 const EditPanel = () => {
     const dispatch = useDispatch()
@@ -45,7 +45,7 @@ const EditPanel = () => {
         })
     }
 
-    const fetchFilter = ()=>{
+    const fetchFilter = () => {
         setLoader(true)
         FilterApi()
             .then((e: IFilterApiData) => {
@@ -56,7 +56,6 @@ const EditPanel = () => {
                 setLoader(false)
             })
     }
-    
 
     useEffect(() => {
         setLoader(true)
@@ -73,22 +72,43 @@ const EditPanel = () => {
     return (
         <div className="AdminPanel">
             {loader && <Loader />}
-            <ModalAddFilter callback={fetchFilter}/>
-            <ModalEditPanel callback ={fetchFilter} post={oneData} visible={visible} setVisible={()=>setVisible(false)}/>
+            <ModalAddFilter callback={fetchFilter} />
+            <ModalEditPanel
+                callback={fetchFilter}
+                post={oneData}
+                visible={visible}
+                setVisible={() => setVisible(false)}
+            />
             <div className="Filter">
                 {filtres?.map(({ title, array, id }) => (
                     <>
                         <div className="Filter__block">
                             <div className="Filter__delete">
                                 <h3>{title}</h3>
-                                <button onClick = {()=>delte(Number(id) || 0)}>Удалить фильтер</button>
-                                <button onClick={()=>{setVisible(true); setOneData({ title, array, id })}}>Редактировать фильтер</button>
-                            </div>
-                            {array?.map(({ name }) => (
-                                <div className="Filter__text">
-                                    <p>{name}</p>
+                                <div>
+                                    {" "}
+                                    <button
+                                        onClick={() => delte(Number(id) || 0)}
+                                    >
+                                        Удалить фильтер
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setVisible(true)
+                                            setOneData({ title, array, id })
+                                        }}
+                                    >
+                                        Редактировать фильтер
+                                    </button>
                                 </div>
-                            ))}
+                            </div>
+                            <Toggle nameBtn="Показать параметры">
+                                {array?.map(({ name }) => (
+                                    <div className="Filter__text">
+                                        <p>{name}</p>
+                                    </div>
+                                ))}
+                            </Toggle>
                         </div>
                     </>
                 ))}
