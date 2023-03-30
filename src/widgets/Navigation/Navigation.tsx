@@ -82,7 +82,9 @@ const Navigation: FC<{ children: React.ReactNode }> = ({ children }) => {
                         <p>Доставка и оплата</p>
                     </div>
                     <div>
-                        <p>Возврат</p>
+                        <Link to="/adm">
+                            <p>Админ панель</p>
+                        </Link>
                     </div>
                     <div>
                         <p>Контакты</p>

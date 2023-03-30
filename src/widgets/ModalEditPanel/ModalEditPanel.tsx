@@ -36,6 +36,7 @@ const ModalEditPanel: FC<IModalEditPanel> = ({
         let dat = { ...data, array: type }
         FilterApiPut(Number(post?.id) || 0, dat).then((e) => {
             callback()
+            setVisible(false)
         })
     }
     const refType = useRef<HTMLInputElement>(null)
@@ -95,7 +96,7 @@ const ModalEditPanel: FC<IModalEditPanel> = ({
                     ) : (
                         ""
                     )}
-                    <button onClick={() => addType()}>Добавить в тип</button>
+                    <button onClick={(e) => {addType();e.preventDefault()}}>Добавить в тип</button>
 
                     <input type="submit" />
                 </form>

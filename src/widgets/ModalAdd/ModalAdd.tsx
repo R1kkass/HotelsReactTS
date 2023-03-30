@@ -206,7 +206,7 @@ const ModalAdd = () => {
                         ) : (
                             ""
                         )}
-                        <button onClick={() => addType()}>
+                        <button onClick={(e) => {addType(); e.preventDefault()}}>
                             Добавить в тип
                         </button>
 

@@ -23,7 +23,6 @@ const EditModal: FC<{
     data?: ICardApi
 }> = ({ id, visible, setVisible, data }) => {
     const dispatch = useDispatch()
-    const [filterType, setFilterType] = useState()
 
     const {
         register,
@@ -54,6 +53,7 @@ const EditModal: FC<{
     useEffect(() => {
         FilterApi().then((e: IFilterApiData) => {
             setFilter(e.data)
+            setVisible(false)
         })
     }, [])
 
@@ -210,7 +210,7 @@ const EditModal: FC<{
                                     </div>
                                 ))}
                             </div>
-                            <button onClick={() => addType()}>Добавить в тип</button>
+                            <button onClick={(e) => {addType(); e.preventDefault()}}>Добавить в тип</button>
                         </div>
                         {Object.keys(errors).length ? (
                             <span>Поля пусты</span>
