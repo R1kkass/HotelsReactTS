@@ -37,10 +37,10 @@ const Admin = () => {
     return (
         <div className="Admin">
             <div className="Admin__tabs">
-                <div onClick={()=>switchFn(1)}>
+                <div className={searchParams.get('type')=='1' ? 'Active' : ''} onClick={()=>switchFn(1)}>
                     <h3 >Продукты</h3>
                 </div>
-                <div onClick={()=>switchFn(2)}>
+                <div className={searchParams.get('type')=='2' ? 'Active' : ''} onClick={()=>switchFn(2)}>
                     <h3>Категории</h3>
                 </div>
             </div>

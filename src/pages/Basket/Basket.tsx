@@ -4,23 +4,23 @@ import { addBasket } from "../../app/Redux/Store/basket"
 import Breadcrumbs from "../../features/BreadCrumbs/BreadCrumbs"
 import { ICardApi } from "../../shared/api/CardApi"
 import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
-import CardLine from "../../shared/UI/Card/CardLine"
+import CardLine from "../../entities/Card/CardLine"
 import Modal from "../../shared/UI/Modal/Modal"
 import "./Basket.scss"
 
 const Basket = () => {
     const [visible, setVisible] = useState<boolean>(false)
     const dispatch = useDispatch()
-    const bask:ICardApi[] = useSelector((state:any)=>state.basket.basket)
-    const count: number = useSelector((state:any)=>state.basket.count)
+    const bask: ICardApi[] = useSelector((state: any) => state.basket.basket)
+    const count: number = useSelector((state: any) => state.basket.count)
 
     useEffect(() => {
         dispatch(addBasket(JSON.parse(localStorage.getItem("basket") || "[]")))
-     }, [count])
+    }, [count])
 
-    const clearBasket = ()=>{
+    const clearBasket = () => {
         setVisible(true)
-        localStorage.setItem('basket', '')
+        localStorage.setItem("basket", "")
         dispatch(addBasket(JSON.parse(localStorage.getItem("basket") || "[]")))
     }
 
@@ -29,10 +29,10 @@ const Basket = () => {
             <Breadcrumbs
                 arr={[
                     { name: "Каталог", link: "/" },
-                    { name: "Корзина", link: "/basket" }
+                    { name: "Корзина", link: "/basket" },
                 ]}
             />
-            <Modal visible={visible} callback={()=>setVisible(false)}>
+            <Modal visible={visible} callback={() => setVisible(false)}>
                 <h1 className="BasketThank">Спасибо за заказ</h1>
             </Modal>
             <h1>Корзина</h1>
@@ -46,7 +46,7 @@ const Basket = () => {
                     size,
                     brand,
                     manufacturer,
-                    count
+                    count,
                 }) => (
                     <CardLine
                         manufacturer={manufacturer}
@@ -64,12 +64,15 @@ const Basket = () => {
             {count ? (
                 <div className="Basket__order">
                     <div>
-                        <MyButton onClick={()=>clearBasket()}>Оформить заказ</MyButton>
+                        <MyButton onClick={() => clearBasket()}>
+                            Оформить заказ
+                        </MyButton>
                     </div>
                     <div>
                         <p>
                             {bask?.reduce((key, count) => {
-                                return (key += Number(count.price)*(count?.count || 1))
+                                return (key +=
+                                    Number(count.price) * (count?.count || 1))
                             }, 0)}
                             ₸
                         </p>

@@ -1,14 +1,16 @@
-import MyButton from "../Buttons/MyButton/MyButton"
-import basket from "../SVG/Basket/BasketWhite.svg"
-import "./Card.scss"
-import bottle from "../SVG/Weight/Bottle.svg"
 
-import box from "../SVG/Weight/Box.svg"
+import basket from "../../shared/UI/SVG/Basket/BasketWhite.svg"
+import "./Card.scss"
+import bottle from "../../shared/UI/SVG/Weight/Bottle.svg"
+
+import box from "../../shared/UI/SVG/Weight/Box.svg"
 import { FC, useContext, useEffect, useState } from "react"
-import { ICardApi } from "../../api/CardApi"
+
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
-import { addBasket } from "../../../app/Redux/Store/basket"
 import { Link } from "react-router-dom"
+import MyButton from "../../shared/UI/Buttons/MyButton/MyButton"
+import { ICardApi } from "../../shared/api/CardApi"
+import { addBasket } from "../../app/Redux/Store/basket"
 
 const Card: FC<ICardApi> = ({
     id,

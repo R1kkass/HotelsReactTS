@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom"
 import { IRedux } from "../../app/Redux/Store/Index"
 import { addPost, filterPost } from "../../app/Redux/Store/product"
 import { CardApi, ICardApi, ICardData } from "../../shared/api/CardApi"
-import Card from "../../shared/UI/Card/Card"
+import Card from "../../entities/Card/Card"
 import Loader from "../../shared/UI/Loader/Loader"
 import Pagination from "../../widgets/Pagination/Pagination"
 
