@@ -83,11 +83,12 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="Название"
                                     {...register("name", {
-                                        required: true,
+                                        required: "⚠ Введите название",
                                         maxLength: 40,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.name?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -95,11 +96,12 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="Размер"
                                     {...register("size", {
-                                        required: true,
+                                        required: "⚠ Введите размер",
                                         maxLength: 30,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.size?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -107,12 +109,13 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="Бренд"
                                     {...register("brand", {
-                                        required: true,
+                                        required: "⚠ Введите бренд",
                                         min: 3,
                                         max: 20,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.brand?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -121,11 +124,12 @@ const ModalAdd = () => {
                                     type="number"
                                     placeholder="Штрихкод"
                                     {...register("code", {
-                                        required: true,
+                                        required: "⚠ Введите штрихкод",
                                         valueAsNumber: true,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.code?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -133,12 +137,13 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="Производитель"
                                     {...register("manufacturer", {
-                                        required: true,
+                                        required: "⚠ Введите производитель",
                                         min: 5,
                                         max: 99,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.manufacturer?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -147,11 +152,12 @@ const ModalAdd = () => {
                                     type="number"
                                     placeholder="Цена"
                                     {...register("price", {
-                                        required: true,
+                                        required: "⚠ Введите цену",
                                         maxLength: 30,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.price?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -159,12 +165,11 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="URL картинки"
                                     {...register("imgURL", {
-                                        required: true,
-                                        min: 5,
-                                        max: 99,
+                                        required: "⚠ Введите URL картинки",
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.imgURL?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -172,12 +177,11 @@ const ModalAdd = () => {
                                 <input
                                     placeholder="Описание"
                                     {...register("description", {
-                                        required: true,
-                                        min: 5,
-                                        max: 99,
+                                        required: "⚠ Введите описание",
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.description?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -206,7 +210,12 @@ const ModalAdd = () => {
                         ) : (
                             ""
                         )}
-                        <button onClick={(e) => {addType(); e.preventDefault()}}>
+                        <button
+                            onClick={(e) => {
+                                addType()
+                                e.preventDefault()
+                            }}
+                        >
                             Добавить в тип
                         </button>
 

@@ -70,11 +70,12 @@ const ModalEditPanel: FC<IModalEditPanel> = ({
                                 defaultValue={post?.title}
                                 placeholder="Название"
                                 {...register("title", {
-                                    required: true,
+                                    required: "⚠ Введите название",
                                     maxLength: 30,
                                 })}
                             />
                         </label>
+                        <p className="Error">{errors?.title?.message}</p>
                     </div>
                     <div>
                         <label>

@@ -87,12 +87,13 @@ const EditModal: FC<{
                                     defaultValue={data?.name}
                                     placeholder="Название"
                                     {...register("name", {
-                                        required: true,
+                                        required: "⚠ Введите название",
                                         maxLength: 30,
                                         value: data?.name,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.name?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -101,11 +102,12 @@ const EditModal: FC<{
                                     defaultValue={data?.size}
                                     placeholder="Размер"
                                     {...register("size", {
-                                        required: true,
+                                        required: "⚠ Введите размер",
                                         maxLength: 30,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.size?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -114,12 +116,13 @@ const EditModal: FC<{
                                     defaultValue={data?.brand}
                                     placeholder="Бренд"
                                     {...register("brand", {
-                                        required: true,
+                                        required: "⚠ Введите бренд",
                                         min: 5,
                                         max: 15,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.brand?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -130,9 +133,11 @@ const EditModal: FC<{
                                     placeholder="Штрихкод"
                                     {...register("code", {
                                         maxLength: 30,
+                                        required: "⚠ Введите штрихкод",
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.code?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -141,12 +146,13 @@ const EditModal: FC<{
                                     defaultValue={data?.manufacturer}
                                     placeholder="Производитель"
                                     {...register("manufacturer", {
-                                        required: true,
+                                        required: "⚠ Введите производителя",
                                         min: 5,
                                         max: 20,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.manufacturer?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -155,11 +161,12 @@ const EditModal: FC<{
                                     type="number"
                                     placeholder="Цена"
                                     {...register("price", {
-                                        required: true,
+                                        required: "⚠ Введите цену",
                                         maxLength: 30,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.price?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -168,12 +175,13 @@ const EditModal: FC<{
                                     defaultValue={data?.imgURL}
                                     placeholder="URL картинки"
                                     {...register("imgURL", {
-                                        required: true,
+                                        required: "⚠ Введите URL картинки",
                                         min: 5,
                                         max: 99,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.imgURL?.message}</p>
                         </div>
                         <div>
                             <label>
@@ -182,12 +190,13 @@ const EditModal: FC<{
                                     defaultValue={data?.description}
                                     placeholder="Описание"
                                     {...register("description", {
-                                        required: true,
+                                        required: "⚠ Введите описание",
                                         min: 5,
                                         max: 99,
                                     })}
                                 />
                             </label>
+                            <p className="Error">{errors?.description?.message}</p>
                         </div>
                         <div>
                             <label>
